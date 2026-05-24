@@ -1,11 +1,13 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+/**
+ * Configuração de conexão com o Firebase.
+ * Aqui nós inicializamos os serviços que vamos usar, como o Banco de Dados (Firestore).
+ */
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+import { initializeApp } from "firebase/app";
+import { getAnalytics, isSupported } from "firebase/analytics";
+import { getFirestore } from "firebase/firestore"; // <-- IMPORTAÇÃO NOVA PARA O BANCO DE DADOS
+
+// Suas chaves de acesso ao projeto e-leve-app
 const firebaseConfig = {
   apiKey: "AIzaSyDhnah9YbMk1Dk9o4by3dFPcg5Q2XOvOTQ",
   authDomain: "e-leve-app.firebaseapp.com",
@@ -16,6 +18,16 @@ const firebaseConfig = {
   measurementId: "G-ZWJE9Y5F29"
 };
 
-// Initialize Firebase
+// Inicializa o Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+
+// Inicializa o Analytics (apenas se for suportado pelo navegador)
+let analytics;
+isSupported().then((supported) => {
+  if (supported) {
+    analytics = getAnalytics(app);
+  }
+});
+
+// Inicializa o Firestore (Banco de Dados) e o exporta para usarmos no resto do app
+export const db = getFirestore(app);

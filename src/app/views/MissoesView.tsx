@@ -1,4 +1,10 @@
-const MissoesView = () => {
+"use client"; // Precisamos disso porque usamos useState
+
+import React, { useState } from 'react';
+import { User, Users, CalendarDays, Target } from 'lucide-react';
+
+export const MissoesView = () => {
+  // Controle de abas secundárias dentro de Missões
   const [subTab, setSubTab] = useState<'pessoais' | 'grupo'>('pessoais');
 
   return (
